@@ -270,236 +270,220 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="20dp"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Scoreboard"
-                android:textSize="35sp"
                 android:textColor="@color/white"
-                />
+                android:textSize="35sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                >
+                android:orientation="horizontal">
+
                 <TextView
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="Name"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Runs"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Balls"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="4's"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="6's"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="player 1"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Runs"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
+
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Balls"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="4's"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="6's"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="Name"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Runs"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
+
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Balls"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="4's"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="6's"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                >
+                android:orientation="horizontal">
+
                 <TextView
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="Name"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Over"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Runs"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="Eco"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
-
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -507,57 +491,68 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="Shakib"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:padding="5dp"
                     android:text="1.3"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
-                <TextView
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="15"
-                    android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_marginLeft="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:padding="5dp"
+                    android:text="15"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:padding="5dp"
                     android:text="11.53"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:padding="5dp"
-                    />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
             <Button
-                android:layout_marginBottom="50dp"
-                android:layout_marginTop="30dp"
+                android:id="@+id/change_bower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/white"
-                android:textSize="20sp"
+                android:text="Change Bowler"
                 android:textColor="@color/black"
+                android:textSize="20sp"
+
+                />
+
+            <Button
+                android:id="@+id/full_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="50dp"
+                android:backgroundTint="@color/white"
                 android:text="full score"
+                android:textColor="@color/black"
+                android:textSize="20sp"
 
                 />
 
