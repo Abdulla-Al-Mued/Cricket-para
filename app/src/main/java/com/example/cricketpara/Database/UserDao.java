@@ -20,4 +20,16 @@ public interface UserDao {
     @Query("select innings_1 from `Match` where match_id = (select MAX(match_id) from `Match`)")
     int maxId();
 
+    @Query("select MAX(match_id) from `Match`")
+    int MaxId();
+
+    @Insert
+    void insertInnings(Innings... innings);
+
+    @Insert
+    void insertBatsman(BatsMan... batsMan);
+
+    @Insert
+    void insertBowler(Bowler... bowler);
+
 }
