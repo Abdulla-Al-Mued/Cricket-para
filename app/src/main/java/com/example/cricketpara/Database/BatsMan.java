@@ -32,7 +32,10 @@ public class BatsMan {
     @ColumnInfo(name = "four")
     public int four;
 
-    public BatsMan(int innings_id, String bat_name, int bat_id, int ball_played, int t_run, int six, int four) {
+    @ColumnInfo(name = "status")
+    public String status;
+
+    public BatsMan(int innings_id, String bat_name, int bat_id, int ball_played, int t_run, int six, int four, String status) {
         this.innings_id = innings_id;
         this.bat_name = bat_name;
         this.bat_id = bat_id;
@@ -40,6 +43,15 @@ public class BatsMan {
         this.t_run = t_run;
         this.six = six;
         this.four = four;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getId() {
