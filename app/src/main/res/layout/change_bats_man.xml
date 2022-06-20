@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select bats man"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            />
+
+        <Spinner
+            android:background="@color/teal_700"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:id="@+id/bats_man_name"
+            android:layout_marginLeft="30dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/out_runs"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#EEEAEA"
+                    android:hint="Runs"
+                    android:inputType="number"
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:layout_marginLeft="20dp"
+                android:id="@+id/ball_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/right"
+                >
+
+                <RadioButton
+                    android:id="@+id/no_ball"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="no ball"
+                    />
+
+                <RadioButton
+                    android:id="@+id/wide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wide"
+                    />
+
+                <RadioButton
+                    android:id="@+id/right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Right Ball"
+                    />
+
+
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New bats man"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bat_name"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="20dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EEEAEA"
+                android:hint="Bats Man name"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Put Player In"
+            android:layout_marginTop="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            />
+
+
+        <RadioGroup
+            android:id="@+id/change_bat_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:checkedButton="@id/striker"
+            >
+
+            <RadioButton
+                android:id="@+id/striker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Striker"
+                />
+
+            <RadioButton
+                android:layout_marginLeft="20dp"
+                android:id="@+id/non_striker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non-Striker"
+                />
+
+
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/add_new_bats_man"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="submit"
+            android:backgroundTint="@color/teal_700"
+            android:layout_marginTop="10dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

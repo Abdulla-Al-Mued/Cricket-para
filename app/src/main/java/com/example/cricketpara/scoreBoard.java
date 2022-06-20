@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,21 +32,25 @@ import java.util.List;
 public class scoreBoard extends AppCompatActivity {
 
     Button full_score;
-    TextInputLayout over, bat1, bat2, bowler, newBowler;
+    TextInputLayout over, bat1, bat2, bowler, newBowler, bat_name, out_runs;
     LinearLayout add_bowler_layout,select_bowler_layout;
 
     private AlertDialog.Builder dialogueBuilder;
     private AlertDialog dialog;
     private Button submit, dot, one, two, three, four, six, wide, no, out, change_bowler, addNewBowlerBtn, addNewBowler, cancelAddBowler,
-            bowlerSelectOkBtn;
+            bowlerSelectOkBtn, addNewBatBtn;
     private TextView balls, runs, wickets, bat_man1, bat_man2, Bowler,
             p1_runs, p1_balls, p1_4s, p1_6s,p2_runs, p2_balls, p2_4s, p2_6s,
             bow_over, bow_runs, bow_eco, bow_wicket,or;
 
-    private Spinner selectBowler;
+    private Spinner selectBowler, selectBatsMan;
 
     ArrayAdapter<String> adapter;
     List<String> list;
+
+    RadioGroup radioGroup, radioGroupBall;
+    RadioButton radioButton, radioButtonBall;
+
 
 
     @Override
@@ -252,8 +258,83 @@ public class scoreBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                changeBatsManDialog();
+
             }
         });
+
+    }
+
+    public void changeBatsManDialog(){
+
+        AppDatabase db = AppDatabase.getDb(this);
+        SharedPreferences innings = getSharedPreferences("innings",MODE_PRIVATE);
+
+        dialogueBuilder = new AlertDialog.Builder(this);
+        final View bowPopupView = getLayoutInflater().inflate(R.layout.change_bats_man, null);
+        dialogueBuilder.setView(bowPopupView);
+
+        dialog.setCanceledOnTouchOutside(false);
+        //dialogueBuilder.setCancelable(false);
+
+
+
+        dialogueBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                Toast.makeText(getApplicationContext(), "Press Ok", Toast.LENGTH_SHORT).show();
+                return i == keyEvent.KEYCODE_BACK;
+
+            }
+        });
+
+
+
+        dialog = dialogueBuilder.create();
+        dialog.show();
+
+        radioGroup = bowPopupView.findViewById(R.id.change_bat_radio_group);
+        radioGroupBall = bowPopupView.findViewById(R.id.ball_type);
+        addNewBatBtn = bowPopupView.findViewById(R.id.add_new_bats_man);
+        selectBatsMan = bowPopupView.findViewById(R.id.bats_man_name);
+        bat_name = bowPopupView.findViewById(R.id.bat_name);
+        out_runs = bowPopupView.findViewById(R.id.out_runs);
+
+
+        list = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,list);
+        selectBatsMan.setAdapter(adapter);
+
+        list = db.userDao().getBatting(innings.getInt("innings_id",0));
+        adapter.addAll(list);
+        adapter.notifyDataSetChanged();
+
+
+        addNewBatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(bat_name.getEditText().getText().toString().isEmpty()){
+                    bat_name.getEditText().setError("Field Cant be empty");
+
+                    return;
+                }
+                if(out_runs.getEditText().getText().toString().isEmpty()){
+                    out_runs.getEditText().setError("Field Cant be empty");
+
+                    return;
+                }
+
+                int radioId = radioGroup.getCheckedRadioButtonId();
+                int radioIdBall = radioGroupBall.getCheckedRadioButtonId();
+                radioButton = (RadioButton) bowPopupView.findViewById(radioId);
+                radioButtonBall = (RadioButton) bowPopupView.findViewById(radioIdBall);
+                //Toast.makeText(getApplicationContext(),radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+
+            }
+        });
+
 
     }
 

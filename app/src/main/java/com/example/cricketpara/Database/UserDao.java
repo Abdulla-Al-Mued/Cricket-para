@@ -68,6 +68,9 @@ public interface UserDao {
     @Query("select bowler_name from Bowler where innings_id = :ing_id")
     List<String> getAllBowler(int ing_id);
 
+    @Query("select bat_name from BatsMan where innings_id = :ing_id and status = 'batting'")
+    List<String> getBatting(int ing_id);
+
     @Query("DELETE FROM Last_balls")
     void deleteLastBalls();
 
