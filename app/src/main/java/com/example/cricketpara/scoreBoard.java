@@ -3,9 +3,11 @@ package com.example.cricketpara;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cricketpara.Database.AppDatabase;
 import com.example.cricketpara.Database.BatsMan;
@@ -264,10 +267,28 @@ public class scoreBoard extends AppCompatActivity {
         dialogueBuilder = new AlertDialog.Builder(this);
         final View bowPopupView = getLayoutInflater().inflate(R.layout.change_bowler, null);
         dialogueBuilder.setView(bowPopupView);
+
+        dialog.setCanceledOnTouchOutside(false);
+        //dialogueBuilder.setCancelable(false);
+
+
+
+        dialogueBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                    Toast.makeText(getApplicationContext(), "Press Ok", Toast.LENGTH_SHORT).show();
+                    return i == keyEvent.KEYCODE_BACK;
+
+            }
+        });
+
+
+
         dialog = dialogueBuilder.create();
         dialog.show();
-        //dialog.setCanceledOnTouchOutside(false);
-        dialogueBuilder.setCancelable(false);
+
+
+
 
         newBowler = bowPopupView.findViewById(R.id.bow_name);
         addNewBowlerBtn = bowPopupView.findViewById(R.id.addNewBowler_button);
