@@ -59,5 +59,20 @@ public interface UserDao {
     @Query("select t_bowled from Innings where innings_id = :ing_id")
     int getBalls(int ing_id);
 
+    @Query("select COUNT(bowler_name) from Bowler where bowler_name = :b_Name and innings_id = :ing_id")
+    int getBowlerNumber(String b_Name, int ing_id);
+
+    @Query("select bow_id from Bowler where bow_id = (select Max(bow_id) from bowler)")
+    int getLastBowlerId();
+
+    @Query("select bowler_name from Bowler where innings_id = :ing_id")
+    List<String> getAllBowler(int ing_id);
+
+    @Query("DELETE FROM Last_balls")
+    void deleteLastBalls();
+
+    @Query("select bow_id from bowler where bowler_name = :bName and innings_id = :ing_id")
+    int getBowIdByName(int ing_id, String bName);
+
 
 }

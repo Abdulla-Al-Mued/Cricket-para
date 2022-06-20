@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.cricketpara.Database.AppDatabase;
@@ -18,17 +21,28 @@ import com.example.cricketpara.Database.Innings;
 import com.example.cricketpara.Database.Last_balls;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class scoreBoard extends AppCompatActivity {
 
     Button full_score;
-    TextInputLayout over, bat1, bat2, bowler;
+    TextInputLayout over, bat1, bat2, bowler, newBowler;
+    LinearLayout add_bowler_layout,select_bowler_layout;
 
     private AlertDialog.Builder dialogueBuilder;
     private AlertDialog dialog;
-    private Button submit, dot, one, two, three, four, six, wide, no, out, change_bowler;
+    private Button submit, dot, one, two, three, four, six, wide, no, out, change_bowler, addNewBowlerBtn, addNewBowler, cancelAddBowler,
+            bowlerSelectOkBtn;
     private TextView balls, runs, wickets, bat_man1, bat_man2, Bowler,
             p1_runs, p1_balls, p1_4s, p1_6s,p2_runs, p2_balls, p2_4s, p2_6s,
-            bow_over, bow_runs, bow_eco, bow_wicket;
+            bow_over, bow_runs, bow_eco, bow_wicket,or;
+
+    private Spinner selectBowler;
+
+    ArrayAdapter<String> adapter;
+    List<String> list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +114,7 @@ public class scoreBoard extends AppCompatActivity {
 
     private void setAllOperation() {
         SharedPreferences sp = getSharedPreferences("innings",MODE_PRIVATE);
+        SharedPreferences bow = getSharedPreferences("Bowler",MODE_PRIVATE);
         AppDatabase db = AppDatabase.getDb(this);
 
         dot.setOnClickListener(new View.OnClickListener() {
@@ -120,11 +135,16 @@ public class scoreBoard extends AppCompatActivity {
                     bat_id = db.userDao().getBatsMan(lastBat,sp.getInt("innings_id",0));
 
 
+                if(balls % 6 == 0){
+
+                    db.userDao().deleteLastBalls();
+
+                }
 
                 db.userDao().inc_innings(sp.getInt("innings_id",0),0);
                 db.userDao().inc_batsman(bat_id,sp.getInt("innings_id",0),0);
-                db.userDao().inc_bow(sp.getInt("innings_id",0),1);
-                db.userDao().insertLastBalls(new Last_balls(1,bat_id,0,0));
+                db.userDao().inc_bow(sp.getInt("innings_id",0),bow.getInt("bowler",0));
+                db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),bat_id,0,0));
 
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
 
@@ -157,10 +177,17 @@ public class scoreBoard extends AppCompatActivity {
                     bat_id = db.userDao().getBatsMan(lastBat,sp.getInt("innings_id",0));
 
 
+                if(balls % 6 == 0){
+
+                    db.userDao().deleteLastBalls();
+
+                }
+
+
                 db.userDao().inc_innings(sp.getInt("innings_id",0),1);
                 db.userDao().inc_batsman(bat_id,sp.getInt("innings_id",0),1);
-                db.userDao().inc_bow(sp.getInt("innings_id",0),1);
-                db.userDao().insertLastBalls(new Last_balls(1,bat_id,1,0));
+                db.userDao().inc_bow(sp.getInt("innings_id",0),bow.getInt("bowler",0));
+                db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),bat_id,1,0));
 
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
 
@@ -178,6 +205,7 @@ public class scoreBoard extends AppCompatActivity {
         two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
             }
         });
@@ -229,12 +257,111 @@ public class scoreBoard extends AppCompatActivity {
 
     public void changeBowlerDialog(){
 
+        AppDatabase db = AppDatabase.getDb(this);
+        SharedPreferences innings = getSharedPreferences("innings",MODE_PRIVATE);
+        SharedPreferences bow = getSharedPreferences("Bowler",MODE_PRIVATE);
+
         dialogueBuilder = new AlertDialog.Builder(this);
-        final View matchPopupView = getLayoutInflater().inflate(R.layout.change_bowler, null);
-        dialogueBuilder.setView(matchPopupView);
+        final View bowPopupView = getLayoutInflater().inflate(R.layout.change_bowler, null);
+        dialogueBuilder.setView(bowPopupView);
         dialog = dialogueBuilder.create();
         dialog.show();
-        dialog.setCanceledOnTouchOutside(false);
+        //dialog.setCanceledOnTouchOutside(false);
+        dialogueBuilder.setCancelable(false);
+
+        newBowler = bowPopupView.findViewById(R.id.bow_name);
+        addNewBowlerBtn = bowPopupView.findViewById(R.id.addNewBowler_button);
+        addNewBowler = bowPopupView.findViewById(R.id.addBowler);
+        selectBowler = bowPopupView.findViewById(R.id.bowler_name);
+        or = bowPopupView.findViewById(R.id.or_txt_view);
+        select_bowler_layout = bowPopupView.findViewById(R.id.select_bowler_layout);
+        add_bowler_layout = bowPopupView.findViewById(R.id.add_bowler_layout);
+        cancelAddBowler = bowPopupView.findViewById(R.id.cancel);
+        bowlerSelectOkBtn  = bowPopupView.findViewById(R.id.okBtn);
+
+        add_bowler_layout.setVisibility(View.GONE);
+
+        list = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,list);
+        selectBowler.setAdapter(adapter);
+
+        list = db.userDao().getAllBowler(innings.getInt("innings_id",0));
+        adapter.addAll(list);
+        adapter.notifyDataSetChanged();
+
+
+
+        bowlerSelectOkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String selectedBowler = selectBowler.getSelectedItem().toString();
+                int selectedBowId = db.userDao().getBowIdByName(innings.getInt("innings_id",0),selectedBowler);
+                SharedPreferences.Editor bow1 = bow.edit();
+                bow1.putInt("bowler",selectedBowId);
+                bow1.commit();
+                dialog.dismiss();
+
+            }
+        });
+
+
+        addNewBowlerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                select_bowler_layout.setVisibility(View.GONE);
+                addNewBowlerBtn.setVisibility(View.GONE);
+
+                add_bowler_layout.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        addNewBowler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int prevBowCheck = db.userDao().getBowlerNumber(newBowler.getEditText().getText().toString(),innings.getInt("innings_id",0));
+
+                if(newBowler.getEditText().getText().toString().isEmpty()){
+                    newBowler.getEditText().setError("Field Cannot be empty");
+                    return;
+                }
+                if(prevBowCheck>0){
+                    newBowler.getEditText().setError("Name Already Exist");
+                    return;
+                }
+                else {
+
+                    int lastBowId = db.userDao().getLastBowlerId();
+
+                    db.userDao().insertBowler(new Bowler(innings.getInt("innings_id",0), lastBowId+1,newBowler.getEditText().getText().toString(),
+                            0,0,0));
+
+                    add_bowler_layout.setVisibility(View.GONE);
+                    select_bowler_layout.setVisibility(View.VISIBLE);
+                    addNewBowlerBtn.setVisibility(View.VISIBLE);
+                    list = db.userDao().getAllBowler(innings.getInt("innings_id",0));
+                    adapter.addAll(list);
+                    adapter.notifyDataSetChanged();
+
+                }
+
+            }
+        });
+
+        cancelAddBowler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                add_bowler_layout.setVisibility(View.GONE);
+                select_bowler_layout.setVisibility(View.VISIBLE);
+                addNewBowlerBtn.setVisibility(View.VISIBLE);
+            }
+        });
+
+
 
     }
 
@@ -294,12 +421,12 @@ public class scoreBoard extends AppCompatActivity {
                     /*SharedPreferences bat = getSharedPreferences("striker",MODE_PRIVATE);
                     SharedPreferences.Editor edit = bat.edit();
                     edit.putInt("strike",1);
-                    edit.commit();
+                    edit.commit();*/
 
                     SharedPreferences bow = getSharedPreferences("Bowler",MODE_PRIVATE);
                     SharedPreferences.Editor bow1 = bow.edit();
                     bow1.putInt("bowler",1);
-                    bow1.commit();*/
+                    bow1.commit();
 
                     db.userDao().insertLastBalls(new Last_balls(1,1,0,0));
 

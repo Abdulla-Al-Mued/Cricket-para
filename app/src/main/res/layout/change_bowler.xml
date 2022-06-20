@@ -6,33 +6,52 @@
     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/select_bowler_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:orientation="vertical"
         android:padding="30dp"
         >
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Bowler"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                />
+
+            <Spinner
+                android:background="@color/teal_700"
+                android:layout_marginTop="15dp"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:id="@+id/bowler_name"
+                android:layout_marginLeft="30dp"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/okBtn"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Bowler"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="30dp"
-            />
-
-        <Spinner
-            android:layout_marginTop="30dp"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:id="@+id/bowler_name"
-            android:layout_marginLeft="30dp"
+            android:text="ok"
+            android:backgroundTint="@color/teal_700"
             />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/or_txt_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OR"
@@ -42,17 +61,20 @@
         android:textColor="@color/black"
         />
     <Button
+        android:id="@+id/addNewBowler_button"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/teal_700"
         android:text="add new bowler"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         />
 
     <LinearLayout
+        android:id="@+id/add_bowler_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:padding="30dp"
         android:orientation="vertical"
@@ -77,13 +99,31 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/addBowler"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/teal_700"
-            android:text="add"
-            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <Button
+                android:id="@+id/addBowler"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/teal_700"
+                android:text="add"
+                android:layout_marginRight="30dp"
+                />
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/teal_700"
+                android:text="cancel"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
