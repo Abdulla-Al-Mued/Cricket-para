@@ -22,11 +22,35 @@ public class Last_balls {
     @ColumnInfo(name = "extra")
     int extra;
 
-    public Last_balls(int bowler_id, int bat_id, int runs, int extra) {
+    @ColumnInfo(name = "innings_id")
+    int innings_id;
+
+    @ColumnInfo(name = "bat_status")
+    String bat_status;
+
+    public Last_balls(int bowler_id, int bat_id, int runs, int extra, int innings_id, String bat_status) {
         this.bowler_id = bowler_id;
         this.bat_id = bat_id;
         this.runs = runs;
         this.extra = extra;
+        this.innings_id = innings_id;
+        this.bat_status = bat_status;
+    }
+
+    public int getInnings_id() {
+        return innings_id;
+    }
+
+    public void setInnings_id(int innings_id) {
+        this.innings_id = innings_id;
+    }
+
+    public String getBat_status() {
+        return bat_status;
+    }
+
+    public void setBat_status(String bat_status) {
+        this.bat_status = bat_status;
     }
 
     public int getId() {

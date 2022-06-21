@@ -38,7 +38,7 @@ public class scoreBoard extends AppCompatActivity {
     private AlertDialog.Builder dialogueBuilder;
     private AlertDialog dialog;
     private Button submit, dot, one, two, three, four, six, wide, no, out, change_bowler, addNewBowlerBtn, addNewBowler, cancelAddBowler,
-            bowlerSelectOkBtn, addNewBatBtn;
+            bowlerSelectOkBtn, addNewBatBtn, add_new_bats_man_cancel;
     private TextView balls, runs, wickets, bat_man1, bat_man2, Bowler,
             p1_runs, p1_balls, p1_4s, p1_6s,p2_runs, p2_balls, p2_4s, p2_6s,
             bow_over, bow_runs, bow_eco, bow_wicket,or;
@@ -48,8 +48,8 @@ public class scoreBoard extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     List<String> list;
 
-    RadioGroup radioGroup, radioGroupBall;
-    RadioButton radioButton, radioButtonBall;
+    RadioGroup radioGroup, radioGroupBall, radioScoreType;
+    RadioButton radioButton, radioButtonBall, radioButtonScoreType;
 
 
 
@@ -134,9 +134,13 @@ public class scoreBoard extends AppCompatActivity {
                 lastBat = db.userDao().getLastBats();
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
+                String outCase = db.userDao().getLastBallsWhenOut(sp.getInt("innings_id",0));
 
 
-                if(lastRun % 2 == 0 && balls % 6 !=0)
+                if(outCase.equals("out")){
+                    bat_id = lastBat;
+                }
+                else if(lastRun % 2 == 0 && balls % 6 !=0)
                     bat_id = lastBat;
                 else if(lastRun % 2 != 0 && balls % 6 ==0)
                     bat_id = lastBat;
@@ -153,7 +157,7 @@ public class scoreBoard extends AppCompatActivity {
                 db.userDao().inc_innings(sp.getInt("innings_id",0),0);
                 db.userDao().inc_batsman(bat_id,sp.getInt("innings_id",0),0);
                 db.userDao().inc_bow(sp.getInt("innings_id",0),bow.getInt("bowler",0));
-                db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),bat_id,0,0));
+                db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),bat_id,0,0,sp.getInt("innings_id",0),"batting" ));
 
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
 
@@ -176,9 +180,13 @@ public class scoreBoard extends AppCompatActivity {
                 lastBat = db.userDao().getLastBats();
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
+                String outCase = db.userDao().getLastBallsWhenOut(sp.getInt("innings_id",0));
 
 
-                if(lastRun % 2 == 0 && balls % 6 !=0)
+                if(outCase.equals("out")){
+                    bat_id = lastBat;
+                }
+                else if(lastRun % 2 == 0 && balls % 6 !=0)
                     bat_id = lastBat;
                 else if(lastRun % 2 != 0 && balls % 6 ==0)
                     bat_id = lastBat;
@@ -196,7 +204,7 @@ public class scoreBoard extends AppCompatActivity {
                 db.userDao().inc_innings(sp.getInt("innings_id",0),1);
                 db.userDao().inc_batsman(bat_id,sp.getInt("innings_id",0),1);
                 db.userDao().inc_bow(sp.getInt("innings_id",0),bow.getInt("bowler",0));
-                db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),bat_id,1,0));
+                db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),bat_id,1,0,sp.getInt("innings_id",0),"batting" ));
 
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
 
@@ -269,6 +277,7 @@ public class scoreBoard extends AppCompatActivity {
 
         AppDatabase db = AppDatabase.getDb(this);
         SharedPreferences innings = getSharedPreferences("innings",MODE_PRIVATE);
+        SharedPreferences bow = getSharedPreferences("Bowler",MODE_PRIVATE);
 
         dialogueBuilder = new AlertDialog.Builder(this);
         final View bowPopupView = getLayoutInflater().inflate(R.layout.change_bats_man, null);
@@ -282,7 +291,7 @@ public class scoreBoard extends AppCompatActivity {
         dialogueBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-                Toast.makeText(getApplicationContext(), "Press Ok", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Press Cancel", Toast.LENGTH_SHORT).show();
                 return i == keyEvent.KEYCODE_BACK;
 
             }
@@ -295,10 +304,12 @@ public class scoreBoard extends AppCompatActivity {
 
         radioGroup = bowPopupView.findViewById(R.id.change_bat_radio_group);
         radioGroupBall = bowPopupView.findViewById(R.id.ball_type);
+        radioScoreType = bowPopupView.findViewById(R.id.score_type);
         addNewBatBtn = bowPopupView.findViewById(R.id.add_new_bats_man);
         selectBatsMan = bowPopupView.findViewById(R.id.bats_man_name);
         bat_name = bowPopupView.findViewById(R.id.bat_name);
         out_runs = bowPopupView.findViewById(R.id.out_runs);
+        add_new_bats_man_cancel = bowPopupView.findViewById(R.id.add_new_bats_man_cancel);
 
 
         list = new ArrayList<>();
@@ -327,11 +338,34 @@ public class scoreBoard extends AppCompatActivity {
 
                 int radioId = radioGroup.getCheckedRadioButtonId();
                 int radioIdBall = radioGroupBall.getCheckedRadioButtonId();
+                int radioIdScoreType = radioScoreType.getCheckedRadioButtonId();
                 radioButton = (RadioButton) bowPopupView.findViewById(radioId);
                 radioButtonBall = (RadioButton) bowPopupView.findViewById(radioIdBall);
+                radioButtonScoreType = (RadioButton) bowPopupView.findViewById(radioIdScoreType);
                 //Toast.makeText(getApplicationContext(),radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                db.userDao().setBatStatusOut(innings.getInt("innings_id",0), selectBatsMan.getSelectedItem().toString());
+                int maxBatId = db.userDao().getMaxBatsId();
+                db.userDao().insertBatsman(new BatsMan(innings.getInt("innings_id",0),bat_name.getEditText().getText().toString(),
+                        maxBatId+1,0,0,0,0, "batting"));
+
+                if(radioButton.getText().toString().equals("Striker"))
+                    db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),maxBatId+1,0,0,innings.getInt("innings_id",0), "out" ));
+                else {
+                    int a = db.userDao().getBatsMan(maxBatId+1,innings.getInt("innings_id",0));
+                    db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), a,0,0,innings.getInt("innings_id",0), "out" ));
+                }
+
+
                 dialog.dismiss();
 
+            }
+        });
+
+        add_new_bats_man_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
             }
         });
 
@@ -530,7 +564,7 @@ public class scoreBoard extends AppCompatActivity {
                     bow1.putInt("bowler",1);
                     bow1.commit();
 
-                    db.userDao().insertLastBalls(new Last_balls(1,1,0,0));
+                    db.userDao().insertLastBalls(new Last_balls(1,1,0,0,innings.getInt("innings_id",0),"batting" ));
 
                     dialog.dismiss();
 

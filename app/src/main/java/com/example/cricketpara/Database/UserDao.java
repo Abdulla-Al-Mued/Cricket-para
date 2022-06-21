@@ -77,5 +77,14 @@ public interface UserDao {
     @Query("select bow_id from bowler where bowler_name = :bName and innings_id = :ing_id")
     int getBowIdByName(int ing_id, String bName);
 
+    @Query("select bat_id from BatsMan where bat_id = (select MAX(bat_id) from BatsMan)")
+    int getMaxBatsId();
+
+    @Query("update BatsMan set status = 'out' where bat_name = :b_name and innings_id = :ing_id")
+    void setBatStatusOut(int ing_id, String b_name);
+
+    @Query("select bat_status from Last_balls where id = (select MAX(id) from last_balls) and innings_id = :ing_id")
+    String getLastBallsWhenOut(int ing_id);
+
 
 }
