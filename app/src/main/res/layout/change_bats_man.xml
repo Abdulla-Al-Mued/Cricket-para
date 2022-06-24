@@ -58,12 +58,11 @@
 
 
                 <Spinner
-                    android:background="@color/teal_700"
-                    android:layout_marginTop="10dp"
+                    android:id="@+id/out_runs"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/out_runs"
-                    />
+                    android:layout_marginTop="10dp"
+                    android:background="@color/teal_700" />
 
                 <RadioGroup
                     android:layout_marginLeft="20dp"

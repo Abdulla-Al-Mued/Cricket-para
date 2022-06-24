@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -38,7 +37,7 @@ public class scoreBoard extends AppCompatActivity {
     private AlertDialog.Builder dialogueBuilder;
     private AlertDialog dialog;
     private Button submit, dot, one, two, three, four, six, wide, no, out, change_bowler, addNewBowlerBtn, addNewBowler, cancelAddBowler,
-            bowlerSelectOkBtn, addNewBatBtn, add_new_bats_man_cancel;
+            bowlerSelectOkBtn, addNewBatBtn, add_new_bats_man_cancel, no_ball_submit, wideSubmit;
     private TextView balls, runs, wickets, bat_man1, bat_man2, Bowler,
             p1_runs, p1_balls, p1_4s, p1_6s,p2_runs, p2_balls, p2_4s, p2_6s,
             bow_over, bow_runs, bow_eco, bow_wicket,or;
@@ -254,12 +253,16 @@ public class scoreBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                wideBallDialog();
+
             }
         });
 
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                noBallDialog();
 
             }
         });
@@ -272,6 +275,209 @@ public class scoreBoard extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void wideBallDialog(){
+
+        AppDatabase db = AppDatabase.getDb(this);
+        SharedPreferences innings = getSharedPreferences("innings",MODE_PRIVATE);
+        SharedPreferences bow = getSharedPreferences("Bowler",MODE_PRIVATE);
+
+        dialogueBuilder = new AlertDialog.Builder(this);
+        final View wideBallPopupView = getLayoutInflater().inflate(R.layout.wide_ball, null);
+        dialogueBuilder.setView(wideBallPopupView);
+
+        //noBallDialogue.setCanceledOnTouchOutside(false);
+        //dialogueBuilder.setCancelable(false);
+        //dialog.setCanceledOnTouchOutside(false);
+
+
+
+        dialogueBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                Toast.makeText(getApplicationContext(), "Press Cancel", Toast.LENGTH_SHORT).show();
+                return i == keyEvent.KEYCODE_BACK;
+
+            }
+        });
+
+
+
+        dialog = dialogueBuilder.create();
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+
+
+        out_runs = wideBallPopupView.findViewById(R.id.out_runs);
+        wideSubmit = wideBallPopupView.findViewById(R.id.wideSubmit);
+
+
+
+        String[] run = {"0", "1", "2", "3", "4", "5", "6"};
+        selectRunAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, run);
+        selectRunAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        out_runs.setAdapter(selectRunAdapter);
+
+        wideSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int lastBat,lastRun, bat_id, balls;
+                lastBat = db.userDao().getLastBats();
+                lastRun = db.userDao().getLastRuns();
+                balls = db.userDao().getBalls(innings.getInt("innings_id",0));
+                String outCase = db.userDao().getLastBallsWhenOut(innings.getInt("innings_id",0));
+
+
+                if(outCase.equals("out")){
+                    bat_id = lastBat;
+                }
+                else if(lastRun % 2 == 0 && balls % 6 !=0)
+                    bat_id = lastBat;
+                else if(lastRun % 2 != 0 && balls % 6 ==0)
+                    bat_id = lastBat;
+                else
+                    bat_id = db.userDao().getBatsMan(lastBat,innings.getInt("innings_id",0));
+
+                //increment bowler runs
+                db.userDao().inc_bow_run(innings.getInt("innings_id",0), bow.getInt("bowler",0) , 0);
+
+                //increment innings run
+                db.userDao().inc_ing_no_ball_out(innings.getInt("innings_id",0), Integer.parseInt(out_runs.getSelectedItem().toString()) );
+
+                //last balls
+                db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), bat_id, Integer.parseInt(out_runs.getSelectedItem().toString()), 1, innings.getInt("innings_id",0), "no ball"));
+
+
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+
+    public void noBallDialog(){
+
+        AppDatabase db = AppDatabase.getDb(this);
+        SharedPreferences innings = getSharedPreferences("innings",MODE_PRIVATE);
+        SharedPreferences bow = getSharedPreferences("Bowler",MODE_PRIVATE);
+
+        dialogueBuilder = new AlertDialog.Builder(this);
+        final View noBallPopupView = getLayoutInflater().inflate(R.layout.no_ball, null);
+        dialogueBuilder.setView(noBallPopupView);
+
+        //noBallDialogue.setCanceledOnTouchOutside(false);
+        //dialogueBuilder.setCancelable(false);
+        //dialog.setCanceledOnTouchOutside(false);
+
+
+
+        dialogueBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                Toast.makeText(getApplicationContext(), "Press Cancel", Toast.LENGTH_SHORT).show();
+                return i == keyEvent.KEYCODE_BACK;
+
+            }
+        });
+
+
+
+        dialog = dialogueBuilder.create();
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+
+
+        out_runs = noBallPopupView.findViewById(R.id.out_runs);
+        no_ball_submit = noBallPopupView.findViewById(R.id.no_ball_submit);
+        radioScoreType = noBallPopupView.findViewById(R.id.score_type);
+
+
+
+        String[] run = {"0", "1", "2", "3", "4", "5", "6"};
+        selectRunAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, run);
+        selectRunAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        out_runs.setAdapter(selectRunAdapter);
+
+        no_ball_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int radioIdScoreType = radioScoreType.getCheckedRadioButtonId();
+                radioButtonScoreType = (RadioButton) noBallPopupView.findViewById(radioIdScoreType);
+
+
+                if(radioButtonScoreType.getText().toString().equals("Player")){
+
+                    int lastBat,lastRun, bat_id, balls;
+                    lastBat = db.userDao().getLastBats();
+                    lastRun = db.userDao().getLastRuns();
+                    balls = db.userDao().getBalls(innings.getInt("innings_id",0));
+                    String outCase = db.userDao().getLastBallsWhenOut(innings.getInt("innings_id",0));
+
+
+                    if(outCase.equals("out")){
+                        bat_id = lastBat;
+                    }
+                    else if(lastRun % 2 == 0 && balls % 6 !=0)
+                        bat_id = lastBat;
+                    else if(lastRun % 2 != 0 && balls % 6 ==0)
+                        bat_id = lastBat;
+                    else
+                        bat_id = db.userDao().getBatsMan(lastBat,innings.getInt("innings_id",0));
+
+
+                    //increment bowler run
+                    db.userDao().inc_bow_run(innings.getInt("innings_id",0), bow.getInt("bowler",0) , Integer.parseInt(out_runs.getSelectedItem().toString()));
+                    //increment innings run
+                    db.userDao().inc_ing_no_ball_out(innings.getInt("innings_id",0), Integer.parseInt(out_runs.getSelectedItem().toString()) );
+                    // increment batsman run
+                    db.userDao().inc_bat_no_ball_out(innings.getInt("innings_id",0), Integer.parseInt(out_runs.getSelectedItem().toString()), bat_id);
+                    //last balls
+                    db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), bat_id, Integer.parseInt(out_runs.getSelectedItem().toString()), 1, innings.getInt("innings_id",0), "no ball"));
+
+
+
+                }
+                else{
+
+                    int lastBat,lastRun, bat_id, balls;
+                    lastBat = db.userDao().getLastBats();
+                    lastRun = db.userDao().getLastRuns();
+                    balls = db.userDao().getBalls(innings.getInt("innings_id",0));
+                    String outCase = db.userDao().getLastBallsWhenOut(innings.getInt("innings_id",0));
+
+
+                    if(outCase.equals("out")){
+                        bat_id = lastBat;
+                    }
+                    else if(lastRun % 2 == 0 && balls % 6 !=0)
+                        bat_id = lastBat;
+                    else if(lastRun % 2 != 0 && balls % 6 ==0)
+                        bat_id = lastBat;
+                    else
+                        bat_id = db.userDao().getBatsMan(lastBat,innings.getInt("innings_id",0));
+
+                    //increment bowler runs
+                    db.userDao().inc_bow_run(innings.getInt("innings_id",0), bow.getInt("bowler",0) , 0);
+
+                    //increment innings run
+                    db.userDao().inc_ing_no_ball_out(innings.getInt("innings_id",0), Integer.parseInt(out_runs.getSelectedItem().toString()) );
+
+                    //last balls
+                    db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), bat_id, Integer.parseInt(out_runs.getSelectedItem().toString()), 1, innings.getInt("innings_id",0), "no ball"));
+
+                }
+
+                dialog.dismiss();
+
+
+            }
+        });
+
+
 
     }
 
