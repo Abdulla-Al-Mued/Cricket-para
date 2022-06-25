@@ -10,12 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CricketPara" >
         <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".fullScore"
             android:exported="false" />
         <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".scoreBoard"
             android:exported="false" />
         <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>

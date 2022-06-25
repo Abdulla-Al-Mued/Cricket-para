@@ -1,7 +1,6 @@
 package com.example.cricketpara.Database;
 
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -22,9 +21,6 @@ public interface UserDao {
 
     @Query("select MAX(match_id) from `Match`")
     int MaxId();
-
-    @Query("select bat_name from BatsMan where bat_id = :b_id and innings_id = :ings_id")
-    String batInfo(int b_id, int ings_id);
 
     @Query("update BatsMan set ball_played = ball_played + 1, t_run = t_run + :run where bat_id = :b_id and innings_id = :ing_id")
     void inc_batsman(int b_id, int ing_id, int run);
@@ -107,5 +103,22 @@ public interface UserDao {
     @Query("select bat_status from Last_balls where id = (select MAX(id) from last_balls) and innings_id = :ing_id")
     String getLastBallsWhenOut(int ing_id);
 
+    @Query("select bat_id from BatsMan where innings_id = :ing_id and bat_name = :bat_name")
+    int getBatIdByName(int ing_id, String bat_name);
+
+    @Query("select t_run from Batsman where innings_id = :ing_id and bat_id = :bat_id")
+    int getBatRun(int ing_id, int bat_id);
+
+    @Query("select six from Batsman where innings_id = :ing_id and bat_id = :bat_id")
+    int getBatSix(int ing_id, int bat_id);
+
+    @Query("select four from Batsman where innings_id = :ing_id and bat_id = :bat_id")
+    int getBatFour(int ing_id, int bat_id);
+
+    @Query("select ball_played from Batsman where innings_id = :ing_id and bat_id = :bat_id")
+    int getBatBalls(int ing_id, int bat_id);
+
+    @Query("select balls from Bowler where innings_id= :ing_id and bow_id = :b_id")
+    int getBowBall(int ing_id, int b_id);
 
 }

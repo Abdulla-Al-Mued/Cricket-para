@@ -20,7 +20,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:layout_marginRight="18dp"
+            android:layout_marginEnd="18dp"
             />
 
 
@@ -64,7 +64,7 @@
                 />
 
             <RadioButton
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:id="@+id/without_ball"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,16 +90,19 @@
             android:layout_height="wrap_content"
             android:text="submit"
             android:backgroundTint="@color/teal_700"
+            style="?android:attr/buttonBarButtonStyle"
+            android:textColor="@color/white"
             />
 
         <Button
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/teal_700"
             android:text="cancel"
-            />
+            android:textColor="@color/white"
+            style="?android:attr/buttonBarButtonStyle" />
 
 
     </LinearLayout>
