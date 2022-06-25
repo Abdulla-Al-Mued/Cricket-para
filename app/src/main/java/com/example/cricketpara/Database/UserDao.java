@@ -32,6 +32,9 @@ public interface UserDao {
     @Query("update Innings set t_run = t_run + :runs, t_bowled = t_bowled + 1 where innings_id = :ing_id")
     void inc_innings(int ing_id, int runs);
 
+    @Query("update Innings set t_run = t_run + :run where innings_id = :ing_id")
+    void inc_innings_run(int ing_id, int run);
+
     @Query("update Bowler set balls = balls + 1 where innings_id = :ing_id and bow_id = :bow_id")
     void inc_bow(int ing_id, int bow_id);
 

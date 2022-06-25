@@ -11,7 +11,10 @@
         <entry key="app/src/main/res/layout/activity_score_boad.xml" value="0.25" />
         <entry key="app/src/main/res/layout/change_bats_man.xml" value="0.25" />
         <entry key="app/src/main/res/layout/change_bowler.xml" value="0.19166666666666668" />
+        <entry key="app/src/main/res/layout/no_ball.xml" value="0.19166666666666668" />
+        <entry key="app/src/main/res/layout/over_throw.xml" value="0.25" />
         <entry key="app/src/main/res/layout/popup.xml" value="0.19166666666666668" />
+        <entry key="app/src/main/res/layout/wide_ball.xml" value="0.19166666666666668" />
       </map>
     </option>
   </component>
