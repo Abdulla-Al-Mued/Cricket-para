@@ -99,6 +99,17 @@ public class scoreBoard extends AppCompatActivity {
         bow_eco = findViewById(R.id.bow_eco);
         bow_wicket = findViewById(R.id.bow_wicket);
 
+        SharedPreferences sp = getSharedPreferences("innings",MODE_PRIVATE);
+        SharedPreferences bow = getSharedPreferences("Bowler",MODE_PRIVATE);
+
+        AppDatabase db = AppDatabase.getDb(this);
+        int last_player_id = db.userDao().getLastBats(sp.getInt("innings_id",0));
+        int other_player_id = db.userDao().getBatsMan(last_player_id, sp.getInt("innings_id",0));
+
+        bat_man1.setText(db.userDao().getBatNameById(sp.getInt("innings_id",0), last_player_id));
+        bat_man2.setText(db.userDao().getBatNameById(sp.getInt("innings_id",0), other_player_id));
+        Bowler.setText(db.userDao().getBowNameById(sp.getInt("innings_id",0), bow.getInt("bowler",0)));
+
 
         createNewMatchDialog();
 
@@ -126,7 +137,7 @@ public class scoreBoard extends AppCompatActivity {
             public void onClick(View view) {
 
                 int lastBat,lastRun, bat_id, balls;
-                lastBat = db.userDao().getLastBats();
+                lastBat = db.userDao().getLastBats(sp.getInt("innings_id",0));
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
                 String outCase = db.userDao().getLastBallsWhenOut(sp.getInt("innings_id",0));
@@ -185,7 +196,7 @@ public class scoreBoard extends AppCompatActivity {
 
 
                 int lastBat,lastRun, bat_id, balls;
-                lastBat = db.userDao().getLastBats();
+                lastBat = db.userDao().getLastBats(sp.getInt("innings_id",0));
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
                 String outCase = db.userDao().getLastBallsWhenOut(sp.getInt("innings_id",0));
@@ -212,6 +223,7 @@ public class scoreBoard extends AppCompatActivity {
                 db.userDao().inc_innings(sp.getInt("innings_id",0),1);
                 db.userDao().inc_batsman(bat_id,sp.getInt("innings_id",0),1);
                 db.userDao().inc_bow(sp.getInt("innings_id",0),bow.getInt("bowler",0));
+                db.userDao().inc_bow_run_rt_ball(sp.getInt("innings_id",0),bow.getInt("bowler",0), 1);
                 db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),bat_id,1,0,sp.getInt("innings_id",0),"batting" ));
 
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
@@ -358,7 +370,7 @@ public class scoreBoard extends AppCompatActivity {
 
 
                 int lastBat,lastRun, bat_id, balls;
-                lastBat = db.userDao().getLastBats();
+                lastBat = db.userDao().getLastBats(innings.getInt("innings_id",0));
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(innings.getInt("innings_id",0));
                 String outCase = db.userDao().getLastBallsWhenOut(innings.getInt("innings_id",0));
@@ -469,7 +481,7 @@ public class scoreBoard extends AppCompatActivity {
             public void onClick(View view) {
 
                 int lastBat,lastRun, bat_id, balls;
-                lastBat = db.userDao().getLastBats();
+                lastBat = db.userDao().getLastBats(innings.getInt("innings_id",0));
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(innings.getInt("innings_id",0));
                 String outCase = db.userDao().getLastBallsWhenOut(innings.getInt("innings_id",0));
@@ -550,7 +562,7 @@ public class scoreBoard extends AppCompatActivity {
 
 
                 int lastBat,lastRun, bat_id, balls;
-                lastBat = db.userDao().getLastBats();
+                lastBat = db.userDao().getLastBats(innings.getInt("innings_id",0));
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(innings.getInt("innings_id",0));
                 String outCase = db.userDao().getLastBallsWhenOut(innings.getInt("innings_id",0));
@@ -732,7 +744,7 @@ public class scoreBoard extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(),radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 int lastBat,lastRun, bat_id, balls;
-                lastBat = db.userDao().getLastBats();
+                lastBat = db.userDao().getLastBats(innings.getInt("innings_id",0));
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(innings.getInt("innings_id",0));
                 String outCase = db.userDao().getLastBallsWhenOut(innings.getInt("innings_id",0));
@@ -964,7 +976,7 @@ public class scoreBoard extends AppCompatActivity {
                 }
                 else {
 
-                    int lastBowId = db.userDao().getLastBowlerId();
+                    int lastBowId = db.userDao().getLastBowlerId(innings.getInt("innings_id",0));
 
                     db.userDao().insertBowler(new Bowler(innings.getInt("innings_id",0), lastBowId+1,newBowler.getEditText().getText().toString(),
                             0,0,0));

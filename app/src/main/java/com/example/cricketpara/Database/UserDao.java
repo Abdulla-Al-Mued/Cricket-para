@@ -64,8 +64,8 @@ public interface UserDao {
     @Insert
     void insertLastBalls(Last_balls... last_balls);
 
-    @Query("select bat_id from Last_balls Where id = (select MAX(id) from Last_balls)")
-    int getLastBats();
+    @Query("select bat_id from Last_balls Where id = (select MAX(id) from Last_balls) and innings_id = :ing_id")
+    int getLastBats(int ing_id);
 
     @Query("select runs from Last_balls Where id = (select MAX(id) from Last_balls)")
     int getLastRuns();
@@ -79,8 +79,8 @@ public interface UserDao {
     @Query("select COUNT(bowler_name) from Bowler where bowler_name = :b_Name and innings_id = :ing_id")
     int getBowlerNumber(String b_Name, int ing_id);
 
-    @Query("select bow_id from Bowler where bow_id = (select Max(bow_id) from bowler)")
-    int getLastBowlerId();
+    @Query("select bow_id from Bowler where bow_id = (select Max(bow_id) from bowler) and innings_id = :ing_id")
+    int getLastBowlerId(int ing_id);
 
     @Query("select bowler_name from Bowler where innings_id = :ing_id")
     List<String> getAllBowler(int ing_id);
@@ -120,5 +120,11 @@ public interface UserDao {
 
     @Query("select balls from Bowler where innings_id= :ing_id and bow_id = :b_id")
     int getBowBall(int ing_id, int b_id);
+
+    @Query("select bat_name from BatsMan where innings_id = :ing_id and bat_id = :bat_id")
+    String getBatNameById(int ing_id, int bat_id);
+
+    @Query("select bowler_name from Bowler where innings_id = :ing_id and bow_id = :bo_id")
+    String getBowNameById(int ing_id, int bo_id);
 
 }
