@@ -92,23 +92,6 @@
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="."
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    />
-                <TextView
-                    android:id="@+id/balls"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    />
 
             </LinearLayout>
 

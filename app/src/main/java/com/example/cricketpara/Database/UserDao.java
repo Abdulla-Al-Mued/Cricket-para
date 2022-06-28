@@ -127,4 +127,18 @@ public interface UserDao {
     @Query("select bowler_name from Bowler where innings_id = :ing_id and bow_id = :bo_id")
     String getBowNameById(int ing_id, int bo_id);
 
+    @Query("select runs from Bowler where innings_id = :ing_id and bow_id = :b_id")
+    int getBowRun(int ing_id, int b_id);
+
+    @Query("select wickets from Bowler where innings_id = :ing_id and bow_id = :b_id")
+    int getBowWick(int ing_id, int b_id);
+
+    @Query("select t_run from innings where innings_id = :ing_id")
+    int getIngRun(int ing_id);
+
+    @Query("select t_wicket from innings where innings_id = :ing_id")
+    int getIngWicket(int ing_id);
+
+    @Query("select t_bowled from innings where innings_id = :ing_id")
+    int getIngOver(int ing_id);
 }
