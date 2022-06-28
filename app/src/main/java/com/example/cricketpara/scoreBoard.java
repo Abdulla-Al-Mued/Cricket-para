@@ -936,7 +936,7 @@ public class scoreBoard extends AppCompatActivity {
                 bow_eco.setText(
                         Economy.bowlerEconomy(db.userDao().getBowRun(innings.getInt("innings_id",0), bow.getInt("bowler",0)) , BallToOver.convertBallToOver(db.userDao().getBowBall(innings.getInt("innings_id",0), bow.getInt("bowler",0))))
                 );
-                bow_runs.setText(db.userDao().getBowRun(innings.getInt("innings_id",0), bow.getInt("bowler",0)));
+                bow_runs.setText(String.valueOf(db.userDao().getBowRun(innings.getInt("innings_id",0), bow.getInt("bowler",0))));
 
                 runs.setText(String.valueOf(db.userDao().getIngRun(innings.getInt("innings_id",0))));
                 wickets.setText(String.valueOf(db.userDao().getIngWicket(innings.getInt("innings_id",0))));
