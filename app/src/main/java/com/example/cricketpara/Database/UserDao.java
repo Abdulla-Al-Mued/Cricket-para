@@ -79,6 +79,9 @@ public interface UserDao {
     @Query("select COUNT(bowler_name) from Bowler where bowler_name = :b_Name and innings_id = :ing_id")
     int getBowlerNumber(String b_Name, int ing_id);
 
+    @Query("select COUNT(bat_name) from BatsMan where bat_name = :b_Name and innings_id = :ing_id")
+    int getBatsManNumber(String b_Name, int ing_id);
+
     @Query("select bow_id from Bowler where bow_id = (select Max(bow_id) from bowler) and innings_id = :ing_id")
     int getLastBowlerId(int ing_id);
 

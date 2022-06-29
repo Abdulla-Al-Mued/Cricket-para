@@ -798,8 +798,15 @@ public class scoreBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                int prevBatCheck = db.userDao().getBatsManNumber(bat_name.getEditText().getText().toString().trim(), innings.getInt("innings_id",0));
+
                 if(bat_name.getEditText().getText().toString().isEmpty()){
                     bat_name.getEditText().setError("Field Cant be empty");
+
+                    return;
+                }
+                if(prevBatCheck>0){
+                    bat_name.getEditText().setError("Batsman already exist");
 
                     return;
                 }
