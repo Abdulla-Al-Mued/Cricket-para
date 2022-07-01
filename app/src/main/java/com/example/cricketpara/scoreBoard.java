@@ -2,6 +2,8 @@ package com.example.cricketpara;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cricketpara.Adapters.lastBallAdapter;
 import com.example.cricketpara.Algorithms.BallToOver;
 import com.example.cricketpara.Algorithms.Economy;
 import com.example.cricketpara.Database.AppDatabase;
@@ -39,7 +42,8 @@ public class scoreBoard extends AppCompatActivity {
     private AlertDialog.Builder dialogueBuilder;
     private AlertDialog dialog;
     private Button submit, dot, one, two, three, four, six, wide, no, out, change_bowler, addNewBowlerBtn, addNewBowler, cancelAddBowler,
-            bowlerSelectOkBtn, addNewBatBtn, add_new_bats_man_cancel, no_ball_submit, wideSubmit, overThrow, overThrowCancel;
+            bowlerSelectOkBtn, addNewBatBtn, add_new_bats_man_cancel, no_ball_submit, wideSubmit, overThrow, overThrowCancel,
+            ingEndButton;
 
     private TextView overs, runs, wickets, bat_man1, bat_man2, Bowler,
             p1_runs, p1_balls, p1_4s, p1_6s,p2_runs, p2_balls, p2_4s, p2_6s,
@@ -53,6 +57,8 @@ public class scoreBoard extends AppCompatActivity {
 
     RadioGroup radioGroup, radioGroupBall, radioScoreType, radioOverThrowType;
     RadioButton radioButton, radioButtonBall, radioButtonScoreType, radioButtonOverThrowType;
+
+    RecyclerView rec_view;
 
 
 
@@ -101,6 +107,18 @@ public class scoreBoard extends AppCompatActivity {
         bow_eco = findViewById(R.id.bow_eco);
         bow_wicket = findViewById(R.id.bow_wicket);
 
+        //recyclerview
+        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL)
+        AppDatabase db = AppDatabase.getDb(this);
+
+
+        rec_view = findViewById(R.id.rec_view);
+        rec_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        List<Last_balls> lastBalls = db.userDao().getLastBalls();
+        lastBallAdapter adapter = new lastBallAdapter(lastBalls, this);
+        rec_view.setAdapter(adapter);
+
 
         setTexViews();
 
@@ -118,6 +136,46 @@ public class scoreBoard extends AppCompatActivity {
 
 
     }
+
+    private void inningsEndsDialog(){
+
+        dialogueBuilder = new AlertDialog.Builder(this);
+        final View IngEndPopupView = getLayoutInflater().inflate(R.layout.over_throw, null);
+        dialogueBuilder.setView(IngEndPopupView);
+
+
+
+        dialogueBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                Toast.makeText(getApplicationContext(), "Press Cancel", Toast.LENGTH_SHORT).show();
+                return i == keyEvent.KEYCODE_BACK;
+
+            }
+        });
+
+
+
+        dialog = dialogueBuilder.create();
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+
+
+        ingEndButton = IngEndPopupView.findViewById(R.id.ing_over_btn);
+
+        ingEndButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+
+
+
+    }
+
 
     private void setTexViews(){
 
@@ -220,6 +278,11 @@ public class scoreBoard extends AppCompatActivity {
 
                 overs.setText(BallToOver.convertBallToOver(db.userDao().getIngOver(sp.getInt("innings_id",0))));
 
+                //adapter.notifyDataSetChanged();
+                List<Last_balls> lastBalls = db.userDao().getLastBalls();
+                lastBallAdapter adapter = new lastBallAdapter(lastBalls, getApplicationContext());
+                rec_view.setAdapter(adapter);
+
 
                 if(balls % 6 == 0){
 
@@ -289,6 +352,10 @@ public class scoreBoard extends AppCompatActivity {
 
                 runs.setText(String.valueOf(db.userDao().getIngRun(sp.getInt("innings_id",0))));
                 overs.setText(BallToOver.convertBallToOver(db.userDao().getIngOver(sp.getInt("innings_id",0))));
+
+                List<Last_balls> lastBalls = db.userDao().getLastBalls();
+                lastBallAdapter adapter = new lastBallAdapter(lastBalls, getApplicationContext());
+                rec_view.setAdapter(adapter);
 
                 if(balls % 6 == 0){
 
@@ -686,7 +753,8 @@ public class scoreBoard extends AppCompatActivity {
                         Economy.bowlerEconomy(db.userDao().getBowRun(innings.getInt("innings_id",0), bow.getInt("bowler",0)) , BallToOver.convertBallToOver(db.userDao().getBowBall(innings.getInt("innings_id",0), bow.getInt("bowler",0))))
                 );
                 bow_over.setText(BallToOver.convertBallToOver(db.userDao().getBowBall(innings.getInt("innings_id",0), bow.getInt("bowler",0))));
-                bow_runs.setText(db.userDao().getBowRun(innings.getInt("innings_id",0), bow.getInt("bowler",0)));
+                bow_runs.setText(String.valueOf(db.userDao().getBowRun(innings.getInt("innings_id",0), bow.getInt("bowler",0))));
+
 
                 runs.setText(String.valueOf(db.userDao().getIngRun(innings.getInt("innings_id",0))));
                 wickets.setText(String.valueOf(db.userDao().getIngWicket(innings.getInt("innings_id",0))));

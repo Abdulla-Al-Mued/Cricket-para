@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         load_match.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), scoreBoard.class));
+                startActivity(new Intent(getApplicationContext(), allMatches.class));
             }
         });
 

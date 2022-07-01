@@ -91,6 +91,12 @@ public interface UserDao {
     @Query("select bat_name from BatsMan where innings_id = :ing_id and status = 'batting'")
     List<String> getBatting(int ing_id);
 
+    @Query("select * from Last_balls ORDER BY id DESC")
+    List<Last_balls> getLastBalls();
+
+    @Query("select * from `Match`")
+    List<Match> getAllMatch();
+
     @Query("DELETE FROM Last_balls")
     void deleteLastBalls();
 
