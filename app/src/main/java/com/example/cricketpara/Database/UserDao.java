@@ -16,6 +16,9 @@ public interface UserDao {
     @Query("select * from `Match` limit 1")
     Match selectAllItem();
 
+    @Query("select * from `Innings` limit 1")
+    Innings selectAllItemIng();
+
     @Query("select innings_1 from `Match` where match_id = (select MAX(match_id) from `Match`)")
     int maxId();
 
@@ -82,7 +85,7 @@ public interface UserDao {
     @Query("select COUNT(bat_name) from BatsMan where bat_name = :b_Name and innings_id = :ing_id")
     int getBatsManNumber(String b_Name, int ing_id);
 
-    @Query("select bow_id from Bowler where bow_id = (select Max(bow_id) from bowler) and innings_id = :ing_id")
+    @Query("select COUNT(bow_id) from Bowler where innings_id = :ing_id")
     int getLastBowlerId(int ing_id);
 
     @Query("select bowler_name from Bowler where innings_id = :ing_id")
@@ -96,6 +99,12 @@ public interface UserDao {
 
     @Query("select * from `Match`")
     List<Match> getAllMatch();
+
+    @Query("select * from BatsMan where innings_id = :ing_id")
+    List<BatsMan> getAllBatsMan(int ing_id);
+
+    @Query("select * from Bowler where innings_id = :ing_id")
+    List<Bowler> getBowlers(int ing_id);
 
     @Query("DELETE FROM Last_balls")
     void deleteLastBalls();
@@ -150,4 +159,13 @@ public interface UserDao {
 
     @Query("select t_bowled from innings where innings_id = :ing_id")
     int getIngOver(int ing_id);
+
+    @Query("select ing_status from Innings where innings_id = :ing_id")
+    String getIngStatus(int ing_id);
+
+    @Query("select t_over from innings where innings_id = :ing_id")
+    int getTotalOver(int ing_id);
+
+    @Query("update Innings set ing_status = 'Finished' where innings_id = :ing_id")
+    void setIngFinish(int ing_id);
 }

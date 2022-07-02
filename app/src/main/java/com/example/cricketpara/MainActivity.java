@@ -1,18 +1,15 @@
 package com.example.cricketpara;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cricketpara.Database.AppDatabase;
 import com.example.cricketpara.Database.Match;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 

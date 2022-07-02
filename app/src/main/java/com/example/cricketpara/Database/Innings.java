@@ -25,13 +25,25 @@ public class Innings {
     @ColumnInfo(name = "t_bowled")
     public int t_bowled;
 
+    @ColumnInfo(name = "ing_status")
+    public String ing_status;
 
-    public Innings(int innings_id, int t_over, int t_run, int t_wicket, int t_bowled) {
+
+    public Innings(int innings_id, int t_over, int t_run, int t_wicket, int t_bowled, String ing_status) {
         this.innings_id = innings_id;
         this.t_over = t_over;
         this.t_run = t_run;
         this.t_wicket = t_wicket;
         this.t_bowled = t_bowled;
+        this.ing_status = ing_status;
+    }
+
+    public String getIng_status() {
+        return ing_status;
+    }
+
+    public void setIng_status(String ing_status) {
+        this.ing_status = ing_status;
     }
 
     public int getId() {

@@ -28,6 +28,7 @@ import com.example.cricketpara.Database.BatsMan;
 import com.example.cricketpara.Database.Bowler;
 import com.example.cricketpara.Database.Innings;
 import com.example.cricketpara.Database.Last_balls;
+import com.example.cricketpara.Database.Match;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -66,6 +67,9 @@ public class scoreBoard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score_boad);
+
+        SharedPreferences sp = getSharedPreferences("innings",MODE_PRIVATE);
+        //SharedPreferences bow = getSharedPreferences("Bowler",MODE_PRIVATE);
 
         //buttons
         full_score = findViewById(R.id.full_score);
@@ -119,10 +123,21 @@ public class scoreBoard extends AppCompatActivity {
         lastBallAdapter adapter = new lastBallAdapter(lastBalls, this);
         rec_view.setAdapter(adapter);
 
+        String ing_status = db.userDao().getIngStatus(sp.getInt("innings_id",0));
+
 
         setTexViews();
 
-        createNewMatchDialog();
+        Innings data = db.userDao().selectAllItemIng();
+
+        if(data==null){
+            createNewMatchDialog();
+        }
+        else if(ing_status == null){
+            createNewMatchDialog();
+        }
+        else if(!ing_status.equals("Running"))
+            createNewMatchDialog();
 
         setAllOperation();
 
@@ -139,8 +154,10 @@ public class scoreBoard extends AppCompatActivity {
 
     private void inningsEndsDialog(){
 
+        SharedPreferences sp = getSharedPreferences("innings",MODE_PRIVATE);
+
         dialogueBuilder = new AlertDialog.Builder(this);
-        final View IngEndPopupView = getLayoutInflater().inflate(R.layout.over_throw, null);
+        final View IngEndPopupView = getLayoutInflater().inflate(R.layout.innings_end, null);
         dialogueBuilder.setView(IngEndPopupView);
 
 
@@ -160,12 +177,17 @@ public class scoreBoard extends AppCompatActivity {
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
 
+        AppDatabase db = AppDatabase.getDb(this);
+
 
         ingEndButton = IngEndPopupView.findViewById(R.id.ing_over_btn);
 
         ingEndButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                db.userDao().setIngFinish(sp.getInt("innings_id",0));
+                dialog.dismiss();
 
             }
         });
@@ -227,7 +249,7 @@ public class scoreBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                int lastBat,lastRun, bat_id, balls;
+                int lastBat,lastRun, bat_id, balls, t_balls;
                 lastBat = db.userDao().getLastBats(sp.getInt("innings_id",0));
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
@@ -284,7 +306,13 @@ public class scoreBoard extends AppCompatActivity {
                 rec_view.setAdapter(adapter);
 
 
-                if(balls % 6 == 0){
+                t_balls = db.userDao().getTotalOver(sp.getInt("innings_id",0));
+                t_balls = t_balls * 6;
+
+                if(balls >= t_balls){
+                    inningsEndsDialog();
+                }
+                else if(balls % 6 == 0){
 
                     changeBowlerDialog();
 
@@ -1057,7 +1085,7 @@ public class scoreBoard extends AppCompatActivity {
         final View bowPopupView = getLayoutInflater().inflate(R.layout.change_bowler, null);
         dialogueBuilder.setView(bowPopupView);
 
-        dialog.setCanceledOnTouchOutside(false);
+
         //dialogueBuilder.setCancelable(false);
 
 
@@ -1073,8 +1101,10 @@ public class scoreBoard extends AppCompatActivity {
 
 
 
+
         dialog = dialogueBuilder.create();
         dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
 
 
 
@@ -1160,6 +1190,7 @@ public class scoreBoard extends AppCompatActivity {
                     select_bowler_layout.setVisibility(View.VISIBLE);
                     addNewBowlerBtn.setVisibility(View.VISIBLE);
                     list = db.userDao().getAllBowler(innings.getInt("innings_id",0));
+                    adapter.clear();
                     adapter.addAll(list);
                     adapter.notifyDataSetChanged();
 
@@ -1227,7 +1258,7 @@ public class scoreBoard extends AppCompatActivity {
                     SharedPreferences innings = getSharedPreferences("innings",MODE_PRIVATE);
 
                     db.userDao().insertInnings(new Innings(innings.getInt("innings_id",0),Integer.parseInt(over.getEditText().getText().toString().trim()),
-                            0,0,0));
+                            0,0,0, "Running"));
                     db.userDao().insertBatsman(new BatsMan(innings.getInt("innings_id",0),bat1.getEditText().getText().toString().trim(),
                             1,0,0,0,0, "batting"));
                     db.userDao().insertBatsman(new BatsMan(innings.getInt("innings_id",0),bat2.getEditText().getText().toString().trim(),
