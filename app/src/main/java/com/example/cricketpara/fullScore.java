@@ -49,7 +49,7 @@ public class fullScore extends AppCompatActivity {
         rec_viewBat.setAdapter(batAdapter);
         rec_viewBow.setAdapter(bowAdapter);
 
-        //hkh
+        //hkhlkjjkllkljjkljkljlk
 
 
     }
