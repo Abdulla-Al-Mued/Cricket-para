@@ -1,20 +1,14 @@
 package com.example.cricketpara.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.cricketpara.Database.BatsMan;
-import com.example.cricketpara.Database.Match;
 import com.example.cricketpara.R;
-import com.example.cricketpara.matchDetails;
-
 import java.util.List;
 
 public class batListAdapter extends RecyclerView.Adapter<batListAdapter.viewHolder>{
