@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.cricketpara.Database.AppDatabase;
+import com.example.cricketpara.Database.Innings;
 import com.example.cricketpara.Database.Match;
 
 public class matchDetails extends AppCompatActivity {
@@ -45,24 +46,42 @@ public class matchDetails extends AppCompatActivity {
         ing1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 editInnings.putInt("innings_id",ob.innings_1);
-                startActivity(new Intent(getApplicationContext(), scoreBoard.class));
                 editInnings.commit();
+
+                String ms = db.userDao().getIngStatus(ob.innings_1);
+
+
+                if(ms.equals("Finished")){
+
+                    startActivity(new Intent(getApplicationContext(), fullScore.class));
+
+                }
+                else{
+                    startActivity(new Intent(getApplicationContext(), scoreBoard.class));
+                }
             }
         });
 
         ing2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String ms2 = db.userDao().getIngStatus(ob.innings_2);
+                editInnings.putInt("innings_id",ob.innings_2);
+                editInnings.commit();
                 String ms = db.userDao().getIngStatus(ob.innings_1);
-                if(ms.equals("Finished")){
 
-                    editInnings.putInt("innings_id",ob.innings_2);
-                    editInnings.commit();
+
+                if(ms2 == null && ms.equals("Finished")){
                     startActivity(new Intent(getApplicationContext(), scoreBoard.class));
+                }
+                else if(ms.equals("Finished")){
+                    startActivity(new Intent(getApplicationContext(), fullScore.class));
                 }
                 else
                     Toast.makeText(getApplicationContext(), "Please End first innings first", Toast.LENGTH_SHORT).show();
+
 
             }
         });

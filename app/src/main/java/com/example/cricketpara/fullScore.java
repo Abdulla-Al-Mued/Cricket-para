@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -48,6 +49,23 @@ public class fullScore extends AppCompatActivity {
 
         rec_viewBat.setAdapter(batAdapter);
         rec_viewBow.setAdapter(bowAdapter);
+
+
+    }
+
+    @Override
+    public void onBackPressed(){
+        SharedPreferences sp = getSharedPreferences("innings",MODE_PRIVATE);
+        AppDatabase db = AppDatabase.getDb(this);
+        String ms = db.userDao().getIngStatus(sp.getInt("innings_id",0));
+
+        if(ms.equals("Finished")){
+
+            startActivity(new Intent(getApplicationContext(), allMatches.class));
+
+        }
+        else
+            startActivity(new Intent(getApplicationContext(), scoreBoard.class));
 
 
     }

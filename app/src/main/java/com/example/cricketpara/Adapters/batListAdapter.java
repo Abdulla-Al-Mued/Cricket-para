@@ -34,6 +34,10 @@ public class batListAdapter extends RecyclerView.Adapter<batListAdapter.viewHold
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
 
         holder.name.setText(batsMan.get(position).getBat_name());
+        holder.runs.setText(String.valueOf(batsMan.get(position).getT_run()));
+        holder.fours.setText(String.valueOf(batsMan.get(position).getFour()));
+        holder.sixes.setText(String.valueOf(batsMan.get(position).getSix()));
+        holder.balls.setText(String.valueOf(batsMan.get(position).getBall_played()));
 
     }
 
@@ -45,10 +49,15 @@ public class batListAdapter extends RecyclerView.Adapter<batListAdapter.viewHold
     class viewHolder extends RecyclerView.ViewHolder{
 
 
-        TextView name;
+        TextView name, runs, fours, sixes, balls;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
+            runs = itemView.findViewById(R.id.runs);
+            fours = itemView.findViewById(R.id.fours);
+            sixes = itemView.findViewById(R.id.sixes);
+            balls = itemView.findViewById(R.id.balls);
+
 
         }
 

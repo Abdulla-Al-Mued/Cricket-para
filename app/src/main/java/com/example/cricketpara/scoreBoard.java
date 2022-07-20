@@ -188,6 +188,7 @@ public class scoreBoard extends AppCompatActivity {
 
                 db.userDao().setIngFinish(sp.getInt("innings_id",0));
                 dialog.dismiss();
+                startActivity(new Intent(getApplicationContext(), fullScore.class));
 
             }
         });
@@ -326,7 +327,7 @@ public class scoreBoard extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                int lastBat,lastRun, bat_id, balls;
+                int lastBat,lastRun, bat_id, balls, t_balls;
                 lastBat = db.userDao().getLastBats(sp.getInt("innings_id",0));
                 lastRun = db.userDao().getLastRuns();
                 balls = db.userDao().getBalls(sp.getInt("innings_id",0));
@@ -385,7 +386,13 @@ public class scoreBoard extends AppCompatActivity {
                 lastBallAdapter adapter = new lastBallAdapter(lastBalls, getApplicationContext());
                 rec_view.setAdapter(adapter);
 
-                if(balls % 6 == 0){
+                t_balls = db.userDao().getTotalOver(sp.getInt("innings_id",0));
+                t_balls = t_balls * 6;
+
+                if(balls >= t_balls){
+                    inningsEndsDialog();
+                }
+                else if(balls % 6 == 0){
 
                     changeBowlerDialog();
 

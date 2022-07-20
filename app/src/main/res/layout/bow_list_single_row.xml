@@ -12,48 +12,45 @@
         >
         <TextView
             android:id="@+id/name"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:textColor="@color/white"
-            android:textSize="20sp"
             android:padding="5dp"
+            android:text="Shakib"
+            android:textColor="@color/white"
+            android:textSize="15sp"
             />
 
         <TextView
             android:id="@+id/over"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="Over"
+            android:layout_marginLeft="12dp"
+            android:padding="10dp"
+            android:text="0"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:padding="5dp"
+            android:textSize="15sp"
             />
         <TextView
             android:id="@+id/runs"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="Runs"
+            android:layout_marginLeft="5dp"
+            android:padding="10dp"
+            android:text="0"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:padding="5dp"
+            android:textSize="15sp"
             />
 
         <TextView
             android:id="@+id/eco"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="Eco"
+            android:layout_marginLeft="5dp"
+            android:padding="10dp"
+            android:text="0"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:padding="5dp"
+            android:textSize="15sp"
             />
 
 
