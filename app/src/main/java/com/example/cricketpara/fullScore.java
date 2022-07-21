@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.cricketpara.Adapters.batListAdapter;
 import com.example.cricketpara.Adapters.bowlListAdapter;
+import com.example.cricketpara.Algorithms.BallToOver;
 import com.example.cricketpara.Database.AppDatabase;
 import com.example.cricketpara.Database.BatsMan;
 import com.example.cricketpara.Database.Bowler;
@@ -24,19 +26,29 @@ public class fullScore extends AppCompatActivity {
 
 
     RecyclerView rec_viewBat, rec_viewBow;
+    TextView runs, wicket, overs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_score);
 
+        runs = findViewById(R.id.runs);
+        wicket = findViewById(R.id.wickets);
+        overs = findViewById(R.id.overs);
+
         SharedPreferences sp = getSharedPreferences("innings",MODE_PRIVATE);
 
+        AppDatabase db = AppDatabase.getDb(this);
+
+        runs.setText(String.valueOf(db.userDao().getIngRun(sp.getInt("innings_id",0))));
+        wicket.setText(String.valueOf(db.userDao().getIngWicket(sp.getInt("innings_id",0))));
+        overs.setText(BallToOver.convertBallToOver(db.userDao().getIngOver(sp.getInt("innings_id",0))));
 
         rec_viewBat = findViewById(R.id.bats_rec_view);
         rec_viewBow = findViewById(R.id.bow_rec_view);
 
-        AppDatabase db = AppDatabase.getDb(this);
+
 
         rec_viewBat.setLayoutManager(new LinearLayoutManager(this));
         rec_viewBow.setLayoutManager(new LinearLayoutManager(this));

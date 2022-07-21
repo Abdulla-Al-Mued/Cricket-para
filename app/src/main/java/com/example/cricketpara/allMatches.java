@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.cricketpara.Adapters.allMatchAdapter;
@@ -33,4 +34,12 @@ public class allMatches extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed(){
+
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+    }
+
 }

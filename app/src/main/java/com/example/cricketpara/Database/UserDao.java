@@ -55,6 +55,12 @@ public interface UserDao {
     @Query("update BatsMan set t_run = t_run + :run where innings_id = :ing_id and bat_id = :b_id")
     void inc_bat_no_ball_out(int ing_id, int run, int b_id);
 
+    @Query("update BatsMan set four = four + 1 where innings_id = :ing_id and bat_id = :bat_id")
+    void incBatFour(int ing_id,int bat_id);
+
+    @Query("update BatsMan set six = six + 1 where innings_id = :ing_id and bat_id = :bat_id")
+    void incBatSix(int ing_id,int bat_id);
+
     @Insert
     void insertInnings(Innings... innings);
 
@@ -94,8 +100,8 @@ public interface UserDao {
     @Query("select bat_name from BatsMan where innings_id = :ing_id and status = 'batting'")
     List<String> getBatting(int ing_id);
 
-    @Query("select * from Last_balls ORDER BY id DESC")
-    List<Last_balls> getLastBalls();
+    @Query("select * from Last_balls where innings_id = :ing_id ORDER BY id DESC")
+    List<Last_balls> getLastBalls(int ing_id);
 
     @Query("select * from `Match`")
     List<Match> getAllMatch();
