@@ -5,28 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".matchDetails"
+    android:background="#94FF8256"
     android:orientation="vertical"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center_vertical|center"
         >
         <Button
             android:id="@+id/ing_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/teal_700"
-            android:text="Innings 1"
+            android:text="First Innings"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="OR"
+            android:textStyle="bold"
+            android:textSize="30sp"
+
             />
 
         <Button
             android:id="@+id/ing_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/teal_700"
-            android:text="Innings 2"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:text="second innings"
             />
 
 

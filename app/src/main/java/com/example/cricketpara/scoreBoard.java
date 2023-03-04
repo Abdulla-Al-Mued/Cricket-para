@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -1075,6 +1076,7 @@ public class scoreBoard extends AppCompatActivity {
                     p1_4s.setText(String.valueOf(db.userDao().getBatFour(innings.getInt("innings_id",0), bat_id)));
                     p1_6s.setText(String.valueOf(db.userDao().getBatSix(innings.getInt("innings_id",0), bat_id)));
                     p1_balls.setText(String.valueOf(db.userDao().getBatBalls(innings.getInt("innings_id",0), bat_id)));
+                    bat_man1.setTextColor(Color.parseColor(String.valueOf(R.color.black)));
 
                 }
                 else{
@@ -1083,6 +1085,7 @@ public class scoreBoard extends AppCompatActivity {
                     p2_4s.setText(String.valueOf(db.userDao().getBatFour(innings.getInt("innings_id",0), bat_id)));
                     p2_6s.setText(String.valueOf(db.userDao().getBatSix(innings.getInt("innings_id",0), bat_id)));
                     p2_balls.setText(String.valueOf(db.userDao().getBatBalls(innings.getInt("innings_id",0), bat_id)));
+                    bat_man2.setTextColor(Color.parseColor(String.valueOf(R.color.black)));
 
                 }
 
@@ -1320,7 +1323,11 @@ public class scoreBoard extends AppCompatActivity {
 
                 // compare bat_man1 with old batsman
                 if(db.userDao().getBatsMan(maxBatId+1, innings.getInt("innings_id",0)) == batId){
-                    bat_man2.setText(bat_name.getEditText().getText().toString().trim());
+
+                    if(radioButton.getText().toString().equals("Striker"))
+                        bat_man2.setText("*"+bat_name.getEditText().getText().toString().trim());
+                    else
+                        bat_man2.setText(bat_name.getEditText().getText().toString().trim());
                     p2_balls.setText("0");
                     p2_runs.setText("0");
                     p2_4s.setText("0");
@@ -1328,18 +1335,23 @@ public class scoreBoard extends AppCompatActivity {
                 }
 
                 else{
+
                     p1_balls.setText("0");
                     p1_runs.setText("0");
                     p1_4s.setText("0");
                     p1_6s.setText("0");
-                    bat_man1.setText(bat_name.getEditText().getText().toString().trim());
+
+                    if (radioButton.getText().toString().equals("Striker"))
+                        bat_man1.setText("*"+bat_name.getEditText().getText().toString().trim());
+                    else
+                        bat_man1.setText(bat_name.getEditText().getText().toString().trim());
                 }
 
                 if(radioButton.getText().toString().equals("Striker"))
                     db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),maxBatId+1,0,0,innings.getInt("innings_id",0), "out" ));
                 else {
                     int a = db.userDao().getBatsMan(maxBatId+1,innings.getInt("innings_id",0));
-                    db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), a,0,0,innings.getInt("innings_id",0), "out" ));
+                    db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), a,1,0,innings.getInt("innings_id",0), "out" ));
                 }
 
 
@@ -1531,6 +1543,17 @@ public class scoreBoard extends AppCompatActivity {
         dialogueBuilder = new AlertDialog.Builder(this);
         final View matchPopupView = getLayoutInflater().inflate(R.layout.popup, null);
         dialogueBuilder.setView(matchPopupView);
+
+        dialogueBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                Toast.makeText(getApplicationContext(), "Press Cancel", Toast.LENGTH_SHORT).show();
+                return i == keyEvent.KEYCODE_BACK;
+
+            }
+        });
+
+
         dialog = dialogueBuilder.create();
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);

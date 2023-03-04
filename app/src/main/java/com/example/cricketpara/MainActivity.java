@@ -1,11 +1,13 @@
 package com.example.cricketpara;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cricketpara.Database.AppDatabase;
@@ -62,6 +64,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), allMatches.class));
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishAffinity();
+                        //System.exit(0);
+                    }
+                })
+                .setNegativeButton("No",null)
+                .show();
 
     }
 }
