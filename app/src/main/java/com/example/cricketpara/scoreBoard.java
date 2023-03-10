@@ -290,11 +290,15 @@ public class scoreBoard extends AppCompatActivity {
 
 
                     p1_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
+                    bat_man1.setTextColor(getResources().getColor(R.color.black));
+                    bat_man2.setTextColor(getResources().getColor(R.color.white));
 
                 }
                 else{
 
                     p2_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
+                    bat_man2.setTextColor(getResources().getColor(R.color.black));
+                    bat_man1.setTextColor(getResources().getColor(R.color.white));
 
                 }
 
@@ -369,12 +373,16 @@ public class scoreBoard extends AppCompatActivity {
 
                     p1_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p1_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
+                    bat_man2.setTextColor(getResources().getColor(R.color.black));
+                    bat_man1.setTextColor(getResources().getColor(R.color.white));
 
                 }
                 else{
 
                     p2_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p2_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
+                    bat_man1.setTextColor(getResources().getColor(R.color.black));
+                    bat_man2.setTextColor(getResources().getColor(R.color.white));
 
                 }
 
@@ -450,12 +458,16 @@ public class scoreBoard extends AppCompatActivity {
 
                     p1_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p1_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
+                    bat_man1.setTextColor(getResources().getColor(R.color.black));
+                    bat_man2.setTextColor(getResources().getColor(R.color.white));
 
                 }
                 else{
 
                     p2_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p2_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
+                    bat_man2.setTextColor(getResources().getColor(R.color.black));
+                    bat_man1.setTextColor(getResources().getColor(R.color.white));
 
                 }
 
@@ -530,12 +542,16 @@ public class scoreBoard extends AppCompatActivity {
 
                     p1_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p1_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
+                    bat_man2.setTextColor(getResources().getColor(R.color.black));
+                    bat_man1.setTextColor(getResources().getColor(R.color.white));
 
                 }
                 else{
 
                     p2_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p2_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
+                    bat_man1.setTextColor(getResources().getColor(R.color.black));
+                    bat_man2.setTextColor(getResources().getColor(R.color.white));
 
                 }
 
@@ -612,6 +628,8 @@ public class scoreBoard extends AppCompatActivity {
                     p1_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p1_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
                     p1_4s.setText(String.valueOf(db.userDao().getBatFour(sp.getInt("innings_id",0), bat_id)));
+                    bat_man1.setTextColor(getResources().getColor(R.color.black));
+                    bat_man2.setTextColor(getResources().getColor(R.color.white));
 
 
                 }
@@ -620,6 +638,8 @@ public class scoreBoard extends AppCompatActivity {
                     p2_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p2_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
                     p2_4s.setText(String.valueOf(db.userDao().getBatFour(sp.getInt("innings_id",0), bat_id)));
+                    bat_man2.setTextColor(getResources().getColor(R.color.black));
+                    bat_man1.setTextColor(getResources().getColor(R.color.white));
 
                 }
 
@@ -697,6 +717,8 @@ public class scoreBoard extends AppCompatActivity {
                     p1_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p1_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
                     p1_6s.setText(String.valueOf(db.userDao().getBatSix(sp.getInt("innings_id",0), bat_id)));
+                    bat_man1.setTextColor(getResources().getColor(R.color.black));
+                    bat_man2.setTextColor(getResources().getColor(R.color.white));
 
                 }
                 else{
@@ -704,6 +726,8 @@ public class scoreBoard extends AppCompatActivity {
                     p2_runs.setText(String.valueOf(db.userDao().getBatRun(sp.getInt("innings_id",0), bat_id)));
                     p2_balls.setText(String.valueOf(db.userDao().getBatBalls(sp.getInt("innings_id",0), bat_id)));
                     p2_6s.setText(String.valueOf(db.userDao().getBatSix(sp.getInt("innings_id",0), bat_id)));
+                    bat_man2.setTextColor(getResources().getColor(R.color.black));
+                    bat_man1.setTextColor(getResources().getColor(R.color.white));
 
                 }
 
@@ -1076,7 +1100,7 @@ public class scoreBoard extends AppCompatActivity {
                     p1_4s.setText(String.valueOf(db.userDao().getBatFour(innings.getInt("innings_id",0), bat_id)));
                     p1_6s.setText(String.valueOf(db.userDao().getBatSix(innings.getInt("innings_id",0), bat_id)));
                     p1_balls.setText(String.valueOf(db.userDao().getBatBalls(innings.getInt("innings_id",0), bat_id)));
-                    bat_man1.setTextColor(Color.parseColor(String.valueOf(R.color.black)));
+                    bat_man1.setTextColor(getResources().getColor(R.color.black));
 
                 }
                 else{
@@ -1085,7 +1109,7 @@ public class scoreBoard extends AppCompatActivity {
                     p2_4s.setText(String.valueOf(db.userDao().getBatFour(innings.getInt("innings_id",0), bat_id)));
                     p2_6s.setText(String.valueOf(db.userDao().getBatSix(innings.getInt("innings_id",0), bat_id)));
                     p2_balls.setText(String.valueOf(db.userDao().getBatBalls(innings.getInt("innings_id",0), bat_id)));
-                    bat_man2.setTextColor(Color.parseColor(String.valueOf(R.color.black)));
+                    bat_man2.setTextColor(getResources().getColor(R.color.black));
 
                 }
 
@@ -1314,7 +1338,7 @@ public class scoreBoard extends AppCompatActivity {
                 db.userDao().setBatStatusOut(innings.getInt("innings_id",0), selectBatsMan.getSelectedItem().toString());
 
                 //inserting new batsman
-                int maxBatId = db.userDao().getMaxBatsId();
+                int maxBatId = db.userDao().getMaxBatsId(innings.getInt("innings_id",0));
                 db.userDao().insertBatsman(new BatsMan(innings.getInt("innings_id",0),bat_name.getEditText().getText().toString().trim(),
                         maxBatId+1,0,0,0,0, "batting"));
 
@@ -1324,10 +1348,11 @@ public class scoreBoard extends AppCompatActivity {
                 // compare bat_man1 with old batsman
                 if(db.userDao().getBatsMan(maxBatId+1, innings.getInt("innings_id",0)) == batId){
 
+                    bat_man2.setText(bat_name.getEditText().getText().toString().trim());
+
                     if(radioButton.getText().toString().equals("Striker"))
-                        bat_man2.setText("*"+bat_name.getEditText().getText().toString().trim());
-                    else
-                        bat_man2.setText(bat_name.getEditText().getText().toString().trim());
+                        bat_man2.setTextColor(getResources().getColor(R.color.black));
+
                     p2_balls.setText("0");
                     p2_runs.setText("0");
                     p2_4s.setText("0");
@@ -1340,25 +1365,25 @@ public class scoreBoard extends AppCompatActivity {
                     p1_runs.setText("0");
                     p1_4s.setText("0");
                     p1_6s.setText("0");
+                    bat_man1.setText(bat_name.getEditText().getText().toString().trim());
 
                     if (radioButton.getText().toString().equals("Striker"))
-                        bat_man1.setText("*"+bat_name.getEditText().getText().toString().trim());
-                    else
-                        bat_man1.setText(bat_name.getEditText().getText().toString().trim());
+                        bat_man1.setTextColor(getResources().getColor(R.color.black));
+
                 }
 
                 if(radioButton.getText().toString().equals("Striker"))
                     db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0),maxBatId+1,0,0,innings.getInt("innings_id",0), "out" ));
                 else {
                     int a = db.userDao().getBatsMan(maxBatId+1,innings.getInt("innings_id",0));
-                    db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), a,1,0,innings.getInt("innings_id",0), "out" ));
+                    db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), a,0,0,innings.getInt("innings_id",0), "out" ));
                 }
 
 
                 bow_over.setText(BallToOver.convertBallToOver(db.userDao().getBowBall(innings.getInt("innings_id",0), bow.getInt("bowler",0))));
                 bow_wicket.setText(String.valueOf(db.userDao().getBowWick(innings.getInt("innings_id",0), bow.getInt("bowler",0))));
 
-                db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), bat_id, Integer.parseInt(out_runs.getSelectedItem().toString()), 1, innings.getInt("innings_id",0), "no ball"));
+                //db.userDao().insertLastBalls(new Last_balls(bow.getInt("bowler",0), bat_id, Integer.parseInt(out_runs.getSelectedItem().toString()), 1, innings.getInt("innings_id",0), "no ball"));
 
                 bow_eco.setText(
                         Economy.bowlerEconomy(db.userDao().getBowRun(innings.getInt("innings_id",0), bow.getInt("bowler",0)) , BallToOver.convertBallToOver(db.userDao().getBowBall(innings.getInt("innings_id",0), bow.getInt("bowler",0))))
@@ -1602,6 +1627,7 @@ public class scoreBoard extends AppCompatActivity {
                             0,0,0));
 
                     bat_man1.setText(bat1.getEditText().getText().toString());
+                    bat_man1.setTextColor(getResources().getColor(R.color.black));
                     bat_man2.setText(bat2.getEditText().getText().toString());
                     Bowler.setText(bowler.getEditText().getText().toString().trim());
 
